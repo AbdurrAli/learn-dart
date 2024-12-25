@@ -3,5 +3,13 @@
 // Fungsi ini harus mengembalikan true jika bilangan genap dan false jika ganjil.
 bool isEven(int number) {
   // Hint: Gunakan operator modulus % untuk menentukan genap atau ganjil.
-  return false; // Ganti dengan jawabanmu
+  if (number % 2 == 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void main() {
+  print(isEven(9));
 }

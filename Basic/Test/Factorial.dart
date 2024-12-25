@@ -3,5 +3,13 @@
 // Fungsi ini harus mengembalikan nilai faktorial dari n (n! = n * (n-1) * ... * 1).
 int factorial(int n) {
   // Hint: Gunakan rekursi atau perulangan untuk menghitung faktorial.
-  return 1; // Ganti dengan jawabanmu
+  if (n == 1) {
+    return 1;
+  } else {
+    return n * factorial(n - 1);
+  }
+}
+
+void main() {
+  print(factorial(10));
 }
