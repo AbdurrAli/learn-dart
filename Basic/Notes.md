@@ -343,9 +343,169 @@ void main() {
 ```
 
 ## Default Value
+Sometimes we need to convert nullable type to non nullable data type, but if the data is null we need some default value to place with. Here are example to put default value.
+```dart
+void main() {
+    String? someStringValue;
 
-## Looping in Dart
+    var guestName = someStringValue ?? "guest"; // if null put geust as default value
+}
+```
+## Accessing Nullable Member
+To access nullable member, dart will remind us to create null checker by default. But there is a way to access nullable member by using `?.`. Here are some example.
+```dart
+void main() {
+    String? someStrnigValue;
+
+    var anotherStringValue = int?.parse(someStringValue);
+}
+``` 
+
+## For Loop in Dart
+For loop is looping methods, in for loop there are some part like initial statement, condition and post statement. Here are some example.
+
+> Note 
+> condition and post statement are not neccessary, if condition is'nt filled the condition is alwas true
+
+```dart
+void main() {
+    for (var counter = 1; counter <= 10; counter++) {
+        print("perulangan ke-$counter");
+    }
+}
+```
+
+## While Loop
+Same like for loop, this while loop are used to looping too, but while loop are simplified version of for loop, because in here are no using initial statement and post statement and just using condition. Here are some example.
+```dart
+void main() {
+    var counter = 1;
+
+    while(counter <= 10) {
+        print("perulangan ke-$counter");
+        counter++;
+    }
+}
+```
+
+## Do While Loop
+Still same like While loop but reversed. In do while condition checking after looping are executed. Here are some example.
+```dart
+void main() {
+    var counter = 1;
+    do {
+        print('perulangan ke-$counter');
+        counter++;
+    } while (counter <= 10);
+}
+```
+
+## Break and Continue
+Break can used to stop all process in looping but continue are used to skiping some looping and going next to another loop. Here are example:
+```dart
+void main() {
+    var counter = 1;
+
+    // break
+    while(true) {
+        print("perulangan ke-$counter");
+        counter++;
+
+        if (counter > 10) {
+            break;
+        }
+    }
+}
+```
+```dart
+void main() {
+    // continue
+    for (counter = 1; counter <= 10; counter++) {
+        if (counter % 2 == 0) {
+            continue;
+        }
+        print ('perulangan ke-$counter');
+    }
+}
+```
+
+## For In
+Sometimes we need to access list using loop process, with normal approach of looping like use for loop are inefficient, instead use for loop we can use for in to looping inside list. Here are some example:
+```dart
+void main() {
+    List<String> someStringList = ["Joko", "Syaiful", "Aldi"];
+
+    for (nameList in someStringList) {
+        print(nameList);
+    }
+}
+```
+
 
 ## Function
+Function is a block code that we can use to run the program. To create function we can use `void` following with `()` and `{}` like this:
+We can call a function that we are created before using function name and `()` like this
+```dart
+// main function
+void main() {
+    // rest of code
+    someFunc();
+}
+
+void someFunc() {
+    print("Hi, im function");
+}
+```
+
+## Function with Params
+In function we can send an information that we can call, to use that we need an params inside `()` like this
+```dart
+void sayHello(String firstName, String lastName) {
+    print('Hi, $firstName $lastName');
+}
+
+void main() {
+    sayHello('Joko', 'Supriyanto');
+}
+```
+
+## Optional Params
+By default params are must if we create an function, there are way to make params being optional by using `[]`.
+
+```dart
+void sayHello(String firstName, [String? lastName]) {
+    print('Hi, $fisrtName $lastName')
+}
+
+void main() {
+    sayHello('Joko')
+}
+```
+
+## Default Value in Optional Params
+Optional params are nullable, to make it non nullable we can create default value like this.
+```dart
+void sayHello(String firstName, [String lastName = '']) {
+    print('Hi, $fisrtName $lastName')
+}
+
+void main() {
+    sayHello('Joko')
+}
+```
+
+## Named Params
+By default when we calling function with param, we need to write params with similar position to its function. There is a way to using param but we dont need to worry about params position by using named params
+
+```dart
+void sayHello({String? firstName, String? lastName}) {
+    print('Hi, $fisrtName $lastName')
+}
+
+void main() {
+    sayHello(firstName: 'Joko')
+}
+```
+
 
 
