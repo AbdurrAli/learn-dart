@@ -745,10 +745,11 @@ juga. Berikut adalah contoh polymorphism:
 ```dart
 class Employee {
   String? name;
+
   Employee(this.name);
 }
 
-class Manager extends Employee{
+class Manager extends Employee {
   Manager(super.name);
 }
 
@@ -764,8 +765,79 @@ void main() {
   sayHello(Employee('Eko')); // as Employee
   sayHello(Manager('Aldi')); // as Manager
   sayHello(ViceManager('Ahmad')); // as ViceManager
-  
+
   // Polymorph are many form -> banyak bentuk
   // Dengan syarat masih satu turunan dengan parent -> Employee
 }
 ```
+
+## Type Check and Casts
+
+Saat menggunakan polimorph, kadang kita ingin melakukan konversi tipe data ke tipe data aslinya.
+Namun agar aman, sebelum melakukan konversi pastikan kita melakukan type check dengan menggunakan
+kata kunci is dan untuk melakukan konversi tipe data objek kita bisa menggunakan kata kunci as.
+Contoh melakukan type check dan cast object data
+
+```dart
+class Employee {
+  String? name;
+
+  Employee(this.name);
+}
+
+class Manager extends Employee {
+  Manager(super.name);
+}
+
+class ViceManager extends Manager {
+  ViceManager(super.name);
+}
+
+void sayHello(Employee employee) {
+  if (employee is ViceManager) {
+    ViceManager viceManager = employee as ViceManager;
+    print('Hi im VP, my name is ${viceManager.name}');
+  } else if (employee is Manager) {
+    Manager manager = employee as Manager;
+    print('Hi im manager, my name is ${manager.name}');
+  } else {
+    print('Hi im employee, my name is ${employee.name}');
+  }
+}
+
+void main() {
+  sayHello(Employee('Eko'));
+  sayHello(Manager('Aldi'));
+  sayHello(ViceManager('Ahmad'));
+}
+```
+
+## Import
+
+Import adalah kemampuan untuk menggunakan class, function atau variable di file yang berbeda. Import
+sangat cocok digunakan ketika kode program kita sudah banyak dan ditempatkan di banyak file. Berikut adalah contoh untuk melakukan import
+
+```dart
+// source class file
+// located in data/
+class Category {
+  int? id;
+  String? name;
+
+  Category(this.name, this.id);
+}
+```
+
+```dart
+// main program
+import 'data/category.dart';
+
+void main() {
+  var category = Category('smartphone', 1241);
+
+  print(category.id); // 1241
+  print(category.name); // smartphone
+}
+```
+
+## Abstract
