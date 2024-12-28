@@ -1,4 +1,4 @@
-class Location {
+abstract class Location {
   String? name;
 }
 
