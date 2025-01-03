@@ -6,6 +6,11 @@ class Product {
   Product(this.name, this.price, this.description);
 
 
+  @override
+  String toString () {
+    return 'Product {name = $name, price = $price, description = $description}';
+  }
+
   // redirecting const
   Product.productJustName(String name) : this(name, 0.0, '');
   Product.productJustPrice(double price) : this('', price, '');
@@ -42,4 +47,6 @@ void main() {
   print(product.name);
   print(product.price);
   print(product.description);
+
+  print(product);
 }

@@ -815,7 +815,8 @@ void main() {
 ## Import
 
 Import adalah kemampuan untuk menggunakan class, function atau variable di file yang berbeda. Import
-sangat cocok digunakan ketika kode program kita sudah banyak dan ditempatkan di banyak file. Berikut adalah contoh untuk melakukan import
+sangat cocok digunakan ketika kode program kita sudah banyak dan ditempatkan di banyak file. Berikut
+adalah contoh untuk melakukan import
 
 ```dart
 // source class file
@@ -841,3 +842,680 @@ void main() {
 ```
 
 ## Abstract
+
+Saat membuat class kita bisa menjadikan sebuah class menjadi abstrak class, saat menjadi sebuah
+abstrak class tersebut tidak bisa digunakan langsung, hanya bisa diturunkan. Untuk menggunakan
+abstract class kita hanya perlu memakai kata kunci `abstract`. berikut adalah contoh abstract class:
+
+```dart
+// source file
+// using abstract keyword
+abstract class Location {
+  String? name;
+}
+
+// extend location
+class City extends Location {
+  City(String name) {
+    this.name = name;
+  }
+}
+```
+
+```dart
+// main file
+// create object from location child -> city
+import 'data/location.dart';
+
+void main() {
+  var city = City('Jakarta');
+
+  print(city.name); // Jakarta
+}
+```
+
+Pada abstract class, kita juga bisa membuat methods, namun methods pada abstract class tidak dapat
+memiliki body seperti pada class biasa, yang artinya methods abstract class hanya bisa digunakan
+ketika sudah dioverride pada child class. Berikut adalah contoh penggunaan abstract methods:
+
+```dart
+// Main class
+abstract class Animal {
+  String? name;
+
+  Animal(this.name);
+
+  void run();
+}
+
+class Cat extends Animal {
+  Cat(super.name);
+
+  @override
+  void run() {
+    print('Cat $name is running');
+  }
+}
+```
+
+```dart
+// Main program
+import 'data/animal.dart';
+
+void main() {
+  var cat = Cat('Puss');
+  cat.run();
+}
+```
+
+## Access Modifier
+
+Secara default method dan field pada sebuah class dapat diakses oleh siapa saja. Kadang kita ingin
+menyembunyikan sebuah field atau methods, untuk melakukan hal ini kita dapat menggunakan underscore
+`_` agar sebuah methods atau field dapat disembunyikan. Contoh untuk menembunyikan field atau
+methods.
+
+```dart
+class Product {
+  String? name;
+  int? _quantity;
+
+  // not accessible to all file
+  // only accessible at same file 
+
+  int? getQuantity() {
+    // this ways works with methods too
+    return quantity;
+  }
+}
+```
+
+## Encapsulation
+
+Dalam paradigma pemrograman berbasis objek terdapat satu konsep untuk memastikan data sensitif
+sebuah objek tersembunyi dari akses luar agar data tetap valid dan baik. Konsep ini dapat di capai
+dengan membuat agar sebuah objek di sembunyikan dan agar tetap bisa diubah kita bisa membuat
+methods. Pada dart kita bisa menggunakan Getter dan Setter. Karena pada dart proses encapsulation
+sudah ada standarisasinya yaitu dengan menggunakan dua methods tersebut.
+
+## Getter and Setter
+
+Getter dan Setter adalah func yang digunakan untuk mengambil data dan mengubah data field, untuk
+menggunakan func ini kita bisa menggunakan kata kunci get dan set. Contoh untuk menggunakan getter
+dan setter.
+
+> Getter dan Setter yang tidak perlu
+> Jangan hanya gunakan getter dan setter untuk mengmbil dan mengubah sebuah nilai, karena hal itu
+> langsung saja mengakses fieldnya tanpa harus menggunakan setter dan getter.
+
+```dart
+// main class
+class Rectangle {
+  int _width = 0;
+  int _length = 0;
+
+  int get width {
+    return _width;
+  }
+
+  set width(int value) {
+    if (value >= 1) {
+      _width = value;
+    }
+  }
+
+  int get length {
+    return _length;
+  }
+
+  set length(int value) {
+    if (value >= 1) {
+      _length = length;
+    }
+  }
+}
+```
+
+```dart
+// main program
+import 'data/rectangle.dart';
+
+void main() {
+  var rectangle = Rectangle();
+  rectangle.length = -1; // 0 -> condition not valid
+  print(rectangle.length);
+
+  rectangle.width = 2; // 2
+  print(rectangle.width);
+}
+```
+
+## Interface
+
+Interface merupakan kontrak yang menentukan sebuah class dapat melakukan sesuatu. Cara menggunakan
+fitur interface cukup dengan keyword impelement, hampir sama dengan inheritance dengan extends.
+Berikut contoh membuat interface.
+
+```dart
+// source class
+abstract class Car {
+
+  String? name;
+
+  void drive() {}
+
+  int getTire() => 0;
+
+}
+```
+
+```dart
+// main programm and interface
+import 'data/car.dart';
+import 'data/animal.dart';
+
+class Avanza implements Car, Animal {
+  @override
+  String? name;
+
+  @override
+  void drive() {
+    print("Car is moving");
+  }
+
+  @override
+  int getTire() => 4;
+
+  @override
+  void run() {
+    print("cat is run");
+  }
+
+}
+
+void main() {
+  var avanza = Avanza();
+  avanza.drive();
+  avanza.run();
+
+  print(avanza.getTire());
+}
+```
+
+## Multiple Interface Inheritance
+
+Hal yang membadakan pada inheritance biasa dan interface ada pada multiple interface. Jika kita
+menggunakan inheritance biasa kita hanya bisa menggunakan satu parent, nah jika menggunakan
+interface kita bisa menggunakan parent yang tidak terbatas. Contohnya adalah seperti ini.
+
+```dart
+// multiple parent or source
+import 'data/car.dart';
+import 'data/animal.dart';
+
+class Avanza implements Car, Animal {
+  @override
+  String? name;
+
+  @override
+  void drive() {
+    print("Car is moving");
+  }
+
+  @override
+  int getTire() => 4;
+
+  @override
+  void run() {
+    print("cat is run");
+  }
+
+}
+```
+
+## Mixin
+
+Mixin adalah cara untuk membuat dan menggunakan reusable code. Hampir sama dengan konsep copy paste
+namun dengan cara yang lebih baik. Dengan menggunakan mixin kita bisa menerapkan code yang sama pada
+beberapa class. Untuk menggunakan mixin cukup dengan keyword mixin dan with. Berikut contoh
+menggunakan mixin.
+
+```dart
+// source class 
+abstract class Multimedia {
+  // Rest of class
+}
+
+mixin Playable on Multimedia {
+  String? name;
+
+  void play() {
+    print("Play $name");
+  }
+}
+
+mixin Stoppable on Multimedia {
+  String? name;
+
+  void stop() {
+    print("Stop $name");
+  }
+}
+
+class Video extends Multimedia with Playable, Stoppable {
+  // Rest of class
+}
+
+class Audio extends Multimedia with Playable, Stoppable {
+  // Rest of class
+}
+
+```
+
+```dart
+// main program
+import 'data/multimedia.dart';
+
+void main() {
+  var audio = Audio();
+  audio.name = 'Belajar Motor';
+  audio.play();
+  audio.stop();
+}
+```
+
+## ToString Methods
+
+Pada bahasa dart semua parent class dari semua class kecuali null merupakan objek. di dalam objek
+terdapat methods bernama `toString()`. Methods ini merupakan representasi dari data string dari
+class yang dibuat. Kita juga bisa mengubah methods toString sesuai dengan kebutuhan kita. Contoh
+untuk mengubah dan menggunakan methods toString:
+
+```dart
+class Product {
+  String? name;
+  double? price;
+  String? description;
+
+  Product(this.name, this.price, this.description);
+
+
+  @override
+  String toString() {
+    return 'Product {name = $name, price = $price, description = $description}';
+  }
+
+  // redirecting const
+  Product.productJustName(String name) : this(name, 0.0, '');
+
+  Product.productJustPrice(double price) : this('', price, '');
+
+  Product.productJustDesc(String desc) : this('', 13.0, desc);
+
+  // redirecting named constructor
+  Product.productSmartphone(String name) : this.productJustName('xiaomi');
+
+  // redirecting constructor
+  Product.defaultProduct() : this('unkown', 0.0, 'no desc');
+
+  Product.filledProduct(Map<String, dynamic> json)
+      : name = json['name'] ?? 'Unknown',
+        price = json['price'] ?? 0.0,
+        description = (json['description'] as String?)!.isEmpty
+            ? 'no info are given'
+            : json['description'];
+}
+
+void main() {
+  var defaultProduct = Product.defaultProduct();
+  print(defaultProduct.name);
+  print(defaultProduct.price);
+  print(defaultProduct.description);
+
+
+  var product = Product.filledProduct({
+    'name': 'smartphone',
+    'price': 10.000,
+    'description': ''
+  });
+
+  print(product.name);
+  print(product.price);
+  print(product.description);
+
+  print(product);
+  // Product {name = smartphone, price = 10.0, description = no info are given}
+}
+```
+
+## Equals Operator
+
+Equals operator pada paradigma object oriented programming memiliki tujuan untuk melakukan comperasi
+kesamaan lokasi memori dimana sebuah objek ditempatkan. Terkadang kita ingin untuk melakukan logika
+untuk pengechekan kesaamaan objeknya, agar bisa melakukan hal tersebut kita bisa melakukan override
+object equals. Berikut adalah contoh untuk melakukan override methods equals:
+
+```dart
+class Category {
+  int? id;
+  String? name;
+
+  Category(this.name, this.id);
+
+  bool operator ==(Object other) {
+    if (other is Category) {
+      if(id != other.id) return false;
+      if (name != other.name) return false;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  int get hashCode {
+    var result = id.hashCode;
+    result += name.hashCode;
+    return result;
+  }
+
+}
+```
+
+## Hash Code Getter
+
+Hash code adalah representasi integer dari objek, mirip dengan toString yang merupakan representasi
+string. Hash code sangat bemanfaat untuk membuat struktur data unique seperti Hash Map atau Hash Set
+karena cukup menggunakan hashCode untuk mendapatkan unique id dari objek yang tersimpan di memory.
+Secara default hashCode akan mengembalikan unique id dari memory namun kita juga bisa melakukan
+override hashCode. Melakukan override hashCode tidaklah mudah, setidaknya kita harus memperhatikan
+dua kontrak yang harus di pahami, yaitu :
+
+1. Sebanyak apapun hashCode di panggil, jika objeknya sama otomatis hashCode akan mengembalikan
+   nilai int yang sama juga.
+2. Jika objek yang sama di bandingkan, maka nilai hashCode harus selalu bernilai true.
+
+Berikut adalah cara melakukan override hashCode dan menggunakan hashCode:
+
+```dart
+  int get hashCode {
+  var result = id.hashCode;
+  result += name.hashCode;
+  return result;
+}
+```
+
+```dart
+void main() {
+  var category1 = Category('smartphone', 1241);
+  var category2 = Category('smartphone', 1241);
+
+  print(category1 == category2);
+  print(category1.hashCode);
+  print(category2.hashCode);
+}
+```
+
+## NoSuchMethods
+
+No Such Methods merupakan sebuah methods yang terdapat di class object dan bisa di ovveride untuk
+mendeteksi atau bereaksi ketika sebuah methods yang tidak ada dipanggil. Methods ini hanya bisa
+digunakan ketika tipe datanya adalah dynamic. Berikut adalah contoh untuk menggunakan No Such
+Methods:
+
+```dart
+import 'dart:mirrors';
+
+class Repository {
+
+  final String name;
+
+  Repository(this.name);
+
+  @override
+  noSuchMethod(Invocation invocation) {
+    var col = MirrorSystem.getName(invocation.memberName);
+    var val = invocation.positionalArguments.first;
+    var sql = "Select * from $name where $col = '$val'";
+    print(sql);
+  }
+}
+```
+
+```dart
+// main program
+import 'data/repository.dart';
+
+void main() {
+  dynamic repository = Repository("Product");
+  repository.id('10293103');
+  repository.prductName('Smartphone');
+  repository.qty(1000);
+}
+```
+
+No Such Methods juga dapat digunakan untuk abstract class dan juga interface, pada abstract class
+methods ini dapat memberikan keuntungan agar kita tidak perlu lagi mengimplementasikan methods yang
+ada di abstract class lagi dan sekaligus bertujuan untuk membatasi methods yang bisa dibuat. berikut
+adalah contoh untuk menggunakan no such methods di abstract
+class :
+
+```dart
+
+import 'dart:mirrors';
+
+abstract class CategoryRepository {
+  id(int id);
+
+  name(String name);
+
+  qty(int qty);
+
+  location(String loc);
+}
+
+class Repository extends CategoryRepository {
+
+  final String _name;
+
+  Repository(this._name);
+
+  @override
+  noSuchMethod(Invocation invocation) {
+    var col = MirrorSystem.getName(invocation.memberName);
+    var val = invocation.positionalArguments.first;
+    var sql = "Select * from $_name where $col = '$val'";
+    print(sql);
+  }
+}
+
+```
+
+```dart
+import 'data/repository.dart';
+
+void main() {
+  CategoryRepository repository = Repository("Product");
+  repository.id(1029123012);
+  repository.name('Smartphone');
+  repository.qty(1000);
+  repository.location('Jakarta');
+}
+```
+
+## Callable Class
+
+Callable class merupakan class yang bisa dipanggil seperti function. untuk membuat class kita hanya
+perlu menggunakan methods bernama call() dan untuk memanggilnya kita cukup menggunakan nama objeknya
+saja. Berikut adalah contoh untuk membuat callable class:
+
+```dart
+class Sum {
+
+  int a;
+  int b;
+
+  Sum(this.a, this.b);
+
+  int call() => a + b;
+
+}
+```
+
+## Typedef
+
+Typedef merupakan fitur yang dapat digunakan untuk memberikan nama alias untuk tipe data lainnya
+seperti class, jadi kita bisa menggunakan typedef untuk memberikan nama alias ketika nama class
+terlalu panjang atau terdapat nama yang sama. Berikut adalah contoh menggunakan typedef:
+
+```dart
+class Sum {
+
+  int a;
+  int b;
+
+  Sum(this.a, this.b);
+
+  int call() => a + b;
+
+}
+
+typedef Jumlah = Sum;
+
+void main() {
+  var jumlah = Jumlah(10, 10);
+  print(jumlah());
+}
+```
+
+Typedef juga dapat digunakan untuk function, namun khusus untuk function lebih baik menggunakan nama
+asli dari functionnya.
+
+## Static
+
+Static merupakan sebuah keyword yang bisa digunakan untuk membuat methods atau field yang bisa
+diakses tanpa harus membuat objek terlebih dahulu. Fitur atau keyword ini biasa digunakan untuk
+keperluan pembuatan utility, namun perlu di ingat bahwa static field dapat di akses oleh class mana
+saja dan bisa saja diubah jadi untuk membuat static field bisa menggunakan keyword final agar field
+tidak bisa diubah di class lain. Berikut contoh menggunakan static:
+
+```dart
+class Multiple {
+  static int formula(int a, int b) => a * b;
+}
+
+void main() {
+  print(Multiple.formula(10, 5));
+}
+```
+
+## Enum
+
+Enum merupakan fitur yang digunakan untuk membuat tipe data yang sudah jelas nilainya, menggunakan
+fitur enum cukup dengan keyword enum. Berikut adalah contoh menggunakan fitur enum:
+
+```dart
+enum UserLevel { regular, premium, vip }
+
+class User {
+  String? name;
+  UserLevel level;
+
+  User(this.name, this.level);
+}
+
+void main() {
+  var user = User('ali', UserLevel.premium);
+  print(user.name);
+  print(user.level);
+}
+```
+
+## Exception
+
+Exception merupakan representasi dari Error, semua error direpresentasikan dalam class exception.
+Menggunakan class exception kita bisa menggunakan class exception sendiri atau menggunakan yang
+sudah tersedia. Jika kita ingin memakai exception cukup menggunakan keyword throw dan objek
+exceptionnya. Berikut adalah contoh menggunakan exception:
+
+```dart
+class UserValidation implements Exception {
+  String? msg;
+
+  UserValidation(this.msg);
+}
+
+class Validation {
+  static void userValidation(String username, String pass) {
+    if (username == "") {
+      throw UserValidation('Username can not blank');
+    } else if (pass == "") {
+      throw UserValidation('Password can not blank');
+    } else {
+      print("Login Success");
+    }
+  }
+}
+
+void main() {
+  Validation.userValidation('', 'admin123');
+}
+```
+
+## Try Catch
+
+Saat memanggil method yang menyebabkan exception maka otomatis program akan berhenti. Jika kita
+ingin program agar berjalan normal walaupun terkena exception, kita perlu menangkap exception
+tersebut dan melakukan sesuatu ketika exception terjadi. Berikut adalah contoh untuk melakukan
+try-catch exception :
+
+> Stack Trace
+> Kadang kita ingin mengtahui apa penyebab error dengan lebih detail, untuk itu kita bisa
+> menggunakan stack trace untuk mengetahui error lebih detail
+
+```dart
+import 'exception.dart';
+
+void main() {
+  try {
+    Validation.userValidation("", "");
+  } on UsernameValidation catch (exception, stackTrace) {
+    print("Login failed : ${exception.msg}");
+    print("Stack Trace : ${stackTrace.toString()}");
+  } on PassValidation catch (exception, stackTrace) {
+    print("Login failed : ${exception.msg}");
+    print("Stack Trace : ${stackTrace.toString()}");
+  } finally {
+    print("program selesai");
+  }
+}
+```
+
+> Error
+> Tidak semua error layak menggunakan exception, jika error disebabkan kesalahan logic atau
+> kesalahan program maka cukup benarkan saja kode yang salah
+
+## Metadata
+
+Metadata merupakan fitur yang disediakan untuk menambah informasi tambahan pada kode program. Untuk
+menambahkan informasi tambahan kita bisa menggunakan annotation @ dan di ikuti dengan constant atau
+constant constructor. Pada dart terdapat dua Standard annotation, yaitu:
+
+1. @Deprecated -> Memberikan infromasi terhadap program yang sudah ditinggalkan atau tidak terpakai
+2. @Override -> melakukan override sebuah methods atau field dari class parent
+   
+Kita juga bisa membuat annotation dengan constant constructor seperti ini:
+
+```dart
+class ToDo {
+  final String todo;
+
+  const ToDo(this.todo);
+}
+
+class Application {
+  @ToDo("this feature will be implemented in next release")
+  void featureA() {
+    
+  }
+}
+```
